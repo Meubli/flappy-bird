@@ -10,8 +10,8 @@ export const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false,
-        },
+            debug: false
+        }
     },
-    backgroundColor: '#18216D',
+    backgroundColor: '#18216D'
 };

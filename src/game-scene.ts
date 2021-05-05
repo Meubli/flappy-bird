@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import 'phaser';
 import { Bird } from './bird';
 import { config } from './config';
@@ -21,29 +22,31 @@ export class GameScene extends Phaser.Scene {
 
     info: Phaser.GameObjects.Text;
 
-    constructor() {
+    constructor () {
         super({ key: 'GameScene' });
     }
-    init(params: any): void {
+
+    init (params: any): void {
         this.delta = 1000;
     }
 
-    preload(): void {
+    preload (): void {
         this.load.image('bird', '../assets/img/bird.png');
         this.load.image('pipe', '../assets/img/pipe.png');
         this.load.image('pipe2', '../assets/img/pipe2.png');
     }
 
-    create(): void {
+    create (): void {
         this.bird = new Bird(this);
 
-        for (let i = 1; i <= 10; i++){
+        for (let i = 1; i <= 10; i++) {
             this.pipes.push(new PipePair(this, SPACE_BEETWWEN_PIPES * i + 200));
         }
 
         this.drawScore();
     }
-    update(time: number): void {
+
+    update (time: number): void {
         if (!this.ok) {
             return;
         }
@@ -63,16 +66,16 @@ export class GameScene extends Phaser.Scene {
         this.previousFrame = time;
     }
 
-    updatePipes(elapsedTime: number) {
+    updatePipes (elapsedTime: number) : void {
         const oldPipeX = this.pipes[0].X + this.pipes[0].width;
 
         this.pipes.forEach((pipe) => pipe.update(elapsedTime));
 
         const newPipeX = this.pipes[0].X + this.pipes[0].width;
 
-        if(oldPipeX >50 && newPipeX <50){
+        if (oldPipeX > 50 && newPipeX < 50) {
             this.score++;
-            this.scoreText.text = `Score: ${this.score}`
+            this.scoreText.text = `Score: ${this.score}`;
         }
 
         if (this.pipes[0].X + this.pipes[0].width < 0) {
@@ -82,7 +85,7 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    checkGameOver() {
+    checkGameOver () : void {
         if (this.bird.Bounds.bottom > config.height) {
             this.gameOver();
             return;
@@ -95,29 +98,29 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    gameOver() {
+    gameOver () : void {
         this.info = this.add.text(10, 10, 'GAME OVER', {
             font: '100px Arial',
-            color: '#FBFBAC',
+            color: '#FBFBAC'
         });
         this.ok = false;
     }
 
-    drawScore():void{
-        const text = "Score: 0";
-    const style = {
-      font: "40px Roboto",
-      fill: "#FFFFFF",
-      align: "center",
-      shadow: {
-        offsetX: 2,
-        offsetY: 2,
-        color: "#000",
-        blur: 2,
-        fill: true
-      }
-    };
+    drawScore ():void {
+        const text = 'Score: 0';
+        const style = {
+            font: '40px Roboto',
+            fill: '#FFFFFF',
+            align: 'center',
+            shadow: {
+                offsetX: 2,
+                offsetY: 2,
+                color: '#000',
+                blur: 2,
+                fill: true
+            }
+        };
 
-    this.scoreText = this.add.text(0, 0, text, style);
+        this.scoreText = this.add.text(0, 0, text, style);
     }
 }

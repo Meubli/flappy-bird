@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { config } from './config';
 import { GameScene } from './game-scene';
 
@@ -7,17 +8,17 @@ const MAX_DESCENDRE_VELOCITY = 10;
 const ACCELERATION_UP = -10;
 
 export class Bird {
-    sprite: Phaser.GameObjects.Rectangle;
+    sprite: Phaser.GameObjects.Image;
 
     velocity = 0;
 
-    constructor(scene: GameScene) {
-        this.sprite = scene.add.rectangle(100, 200,50,50,0x6666ff);
+    constructor (scene: GameScene) {
+        this.sprite = scene.add.image(100, 200, 'bird');
         this.sprite.displayHeight = 50;
         this.sprite.displayWidth = 50;
     }
 
-    update(elepsedTime: number, keys: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update (elepsedTime: number, keys: Phaser.Types.Input.Keyboard.CursorKeys) : void {
         this.velocity += GRAVITY * elepsedTime;
         this.handleInput(keys);
         this.velocity = Math.min(
@@ -32,20 +33,20 @@ export class Bird {
 
         console.log((Math.atan(v.y / v.x) * 180) / Math.PI);
 
-       // this.sprite.angle = ((Math.atan(v.y / v.x) * 180) / Math.PI) *12;
+        this.sprite.angle = ((Math.atan(v.y / v.x) * 180) / Math.PI) * 12;
     }
 
-    handleInput(keys: Phaser.Types.Input.Keyboard.CursorKeys) {
+    handleInput (keys: Phaser.Types.Input.Keyboard.CursorKeys) : void {
         if (Phaser.Input.Keyboard.JustDown(keys.up)) {
             this.velocity += ACCELERATION_UP;
         }
     }
 
-    get Y(): number {
+    get Y (): number {
         return this.sprite.y;
     }
 
-    get Bounds(): Phaser.Geom.Rectangle {
+    get Bounds (): Phaser.Geom.Rectangle {
         return this.sprite.getBounds();
     }
 }
