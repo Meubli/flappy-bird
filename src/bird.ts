@@ -31,9 +31,7 @@ export class Bird {
 
         v.normalize();
 
-        console.log((Math.atan(v.y / v.x) * 180) / Math.PI);
-
-        this.sprite.angle = ((Math.atan(v.y / v.x) * 180) / Math.PI) * 12;
+        this.sprite.angle = ((Math.atan(v.y / v.x) * 180) / Math.PI) * 15;
     }
 
     handleInput (keys: Phaser.Types.Input.Keyboard.CursorKeys) : void {
