@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { config } from './config';
 import { GameScene } from './game-scene';
 
@@ -6,7 +7,7 @@ export class PipePair {
 
     spriteDown: Phaser.GameObjects.Rectangle;
 
-    constructor(scene: GameScene, posX: number) {
+    constructor (scene: GameScene, posX: number) {
         const height =
             Math.random() * ((6 * config.height) / 10) + config.height / 5;
 
@@ -14,7 +15,7 @@ export class PipePair {
             posX,
             0,
             80,
-            height-config.height*1.5/10,
+            height - config.height * 1.5 / 10,
             0x66ff66
         );
 
@@ -23,7 +24,7 @@ export class PipePair {
 
         this.spriteDown = scene.add.rectangle(
             posX,
-            height + config.height*1.5/10,
+            height + config.height * 1.5 / 10,
             80,
             config.height,
             0x66ff66
@@ -32,20 +33,20 @@ export class PipePair {
         this.spriteDown.displayOriginY = 0;
     }
 
-    update(elepsedTime: number) {
+    update (elepsedTime: number) {
         this.spriteDown.x -= config.pipespeed * elepsedTime;
         this.spriteUp.x -= config.pipespeed * elepsedTime;
     }
 
-    get X() {
+    get X () {
         return this.spriteDown.x;
     }
 
-    get width() {
+    get width () {
         return this.spriteDown.width;
     }
 
-    Reset(x: number) {
+    Reset (x: number) {
         const height =
             Math.random() * ((7 * config.height) / 10) + config.height / 10;
         this.spriteDown.x = x;
@@ -55,16 +56,19 @@ export class PipePair {
         this.spriteUp.y = height + config.height / 10;
     }
 
-    intersects(bound: Phaser.Geom.Rectangle): any {
+    intersects (bound: Phaser.Geom.Rectangle): any {
+        const circle = new Phaser.Geom.Circle(
+            bound.centerX, bound.centerY, (bound.height / 2) * 0.4
+        );
         const retour =
-            Phaser.Geom.Intersects.GetRectangleToRectangle(
-                bound,
+            Phaser.Geom.Intersects.GetCircleToRectangle(
+                circle,
                 this.spriteDown.getBounds()
-            ).length != 0 ||
-            Phaser.Geom.Intersects.GetRectangleToRectangle(
-                bound,
+            ).length !== 0 ||
+            Phaser.Geom.Intersects.GetCircleToRectangle(
+                circle,
                 this.spriteUp.getBounds()
-            ).length != 0;
+            ).length !== 0;
 
         return retour;
     }
